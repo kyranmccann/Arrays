@@ -104,7 +104,7 @@ char *arr_read(Array *arr, int index) {
   if (index > arr -> count)
   {
     printf("ERROR: Index out of bounds.\n");
-    exit(1);
+    return NULL;
   }
   // Otherwise, return the element at the given index
   else
