@@ -21,16 +21,10 @@ typedef struct Array {
  *****/
 Array *create_array (int capacity) {
   // Allocate memory for the Array struct
-  Array *array = malloc(sizeof(Array));
 
   // Set initial values for capacity and count
-  array -> capacity = capacity;
-  array -> count = 0;
 
   // Allocate memory for elements
-  array -> elements = malloc(capacity * sizeof(char *));
-
-  return array;
 
 }
 
@@ -41,27 +35,8 @@ Array *create_array (int capacity) {
 void destroy_array(Array *arr) {
 
   // Free all elements
-  for (int i = 0; i < arr -> count; i++)
-  {
-    if (arr -> elements[i] != NULL)
-    {
-      free(arr -> elements[i]);
-    }
-    else
-    {
-      break;
-    }
-  }
 
-  if (arr -> elements != NULL)
-  {
-    free(arr -> elements);
-  }
   // Free array
-  if (arr != NULL)
-  {
-    free(arr);
-  }
 
 }
 
@@ -72,16 +47,12 @@ void destroy_array(Array *arr) {
 void resize_array(Array *arr) {
 
   // Create a new element storage with double capacity
-  char **double_arr = malloc(2 * (arr -> capacity) * sizeof(char *));
+
   // Copy elements into the new storage
-  memcpy(double_arr, arr -> elements, (arr -> capacity) * sizeof(char *));
 
   // Free the old elements array (but NOT the strings they point to)
-  free(arr -> elements);
 
   // Update the elements and capacity to new values
-  arr -> elements = double_arr;
-  arr -> capacity = arr -> capacity * 2;
 
 }
 
@@ -101,16 +72,8 @@ void resize_array(Array *arr) {
 char *arr_read(Array *arr, int index) {
 
   // Throw an error if the index is greater than the current count
-  if (index > arr -> count)
-  {
-    printf("ERROR: Index out of bounds.\n");
-    exit(1);
-  }
+
   // Otherwise, return the element at the given index
-  else
-  {
-    return arr -> elements[index];
-  }
 }
 
 
@@ -138,15 +101,11 @@ void arr_append(Array *arr, char *element) {
 
   // Resize the array if the number of elements is over capacity
   // or throw an error if resize isn't implemented yet.
-  if (arr -> count == arr -> capacity)
-  {
-    resize_array(arr);
-  }
 
   // Copy the element and add it to the end of the array
-  arr -> elements[arr -> count] = strdup(element);
+
   // Increment count by 1
-  arr -> count++;
+
 }
 
 /*****
