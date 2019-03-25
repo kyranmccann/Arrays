@@ -41,8 +41,27 @@ Array *create_array (int capacity) {
 void destroy_array(Array *arr) {
 
   // Free all elements
+  for (int i = 0; i < arr -> count; i++)
+  {
+    if (arr -> elements[i] != NULL)
+    {
+      free(arr -> elements[i]);
+    }
+    else
+    {
+      break;
+    }
+  }
 
+  if (arr -> elements != NULL)
+  {
+    free(arr -> elements);
+  }
   // Free array
+  if (arr != NULL)
+  {
+    free(arr);
+  }
 
 }
 
