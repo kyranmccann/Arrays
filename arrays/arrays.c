@@ -120,7 +120,7 @@ char *arr_read(Array *arr, int index) {
 void arr_insert(Array *arr, char *element, int index) {
 
   // Throw an error if the index is greater than the current count
-  if (index > arr -> count)
+  if (index >= arr -> count && arr -> count != 0)
   {
     printf("ERROR: Index out of bounds.\n");
     return NULL;
@@ -133,7 +133,7 @@ void arr_insert(Array *arr, char *element, int index) {
   }
 
   // Move every element after the insert index to the right one position
-  for (int i = arr -> count -1; i >= index; i--)
+  for (int i = arr -> count - 1; i >= index; i--)
   {
     arr -> elements[i + 1] = arr -> elements[i];
   }
