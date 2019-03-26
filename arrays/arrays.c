@@ -101,10 +101,10 @@ void resize_array(Array *arr) {
 char *arr_read(Array *arr, int index) {
 
   // Throw an error if the index is greater than the current count
-  if (index > arr -> count)
+  if (index >= arr -> count)
   {
     printf("ERROR: Index out of bounds.\n");
-    exit(1);
+    return NULL;
   }
   // Otherwise, return the element at the given index
   else
@@ -123,7 +123,7 @@ void arr_insert(Array *arr, char *element, int index) {
   if (index > arr -> count)
   {
     printf("ERROR: Index out of bounds.\n");
-    exit(1);
+    return NULL;
   }
 
   // Resize the array if the number of elements is over capacity
@@ -180,10 +180,10 @@ void arr_remove(Array *arr, char *element) {
     tries++;
   }
 
-  if (tries > arr -> count)
+  if (tries >= arr -> count)
   {
     printf("ERROR: Not found.\n");
-    exit(1);
+    return NULL;
   }
   else
   {
