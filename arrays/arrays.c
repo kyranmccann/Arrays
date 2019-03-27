@@ -28,7 +28,7 @@ Array *create_array (int capacity) {
   array -> count = 0;
 
   // Allocate memory for elements
-  array -> elements = malloc(capacity * sizeof(char *));
+  array -> elements = calloc(capacity, sizeof(char *));
 
   return array;
 
@@ -101,10 +101,10 @@ void resize_array(Array *arr) {
 char *arr_read(Array *arr, int index) {
 
   // Throw an error if the index is greater than the current count
-  if (index > arr -> count)
+  if (index >= arr -> count)
   {
     printf("ERROR: Index out of bounds.\n");
-    exit(1);
+    return NULL;
   }
   // Otherwise, return the element at the given index
   else
@@ -120,14 +120,29 @@ char *arr_read(Array *arr, int index) {
 void arr_insert(Array *arr, char *element, int index) {
 
   // Throw an error if the index is greater than the current count
+  if (index >= arr -> count && arr -> count != 0)
+  {
+    printf("ERROR: Index out of bounds.\n");
+    return NULL;
+  }
 
   // Resize the array if the number of elements is over capacity
+  if (arr -> count == arr -> capacity)
+  {
+    resize_array(arr);
+  }
 
   // Move every element after the insert index to the right one position
+  for (int i = arr -> count - 1; i >= index; i--)
+  {
+    arr -> elements[i + 1] = arr -> elements[i];
+  }
 
   // Copy the element and add it to the array
+  arr -> elements[index] = strdup(element);
 
   // Increment count by 1
+  arr -> count++;
 
 }
 
@@ -159,10 +174,30 @@ void arr_remove(Array *arr, char *element) {
 
   // Search for the first occurence of the element and remove it.
   // Don't forget to free its memory!
+  int tries = 0;
+  while(strcmp(arr -> elements[tries], element) != 0 && tries < arr -> count)
+  {
+    tries++;
+  }
+
+  if (tries >= arr -> count)
+  {
+    printf("ERROR: Not found.\n");
+    return NULL;
+  }
+  else
+  {
+    free(arr -> elements[tries]);
+  }
 
   // Shift over every element after the removed element to the left one position
+  for (int i = tries; i < arr -> count; i++ )
+  {
+    arr -> elements[i] = arr -> elements[i + 1];
+  }
 
   // Decrement count by 1
+  arr -> count--;
 
 }
 
